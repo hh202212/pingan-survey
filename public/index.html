@@ -37,7 +37,8 @@
   .invite .sign{text-align:right;color:var(--navy);font-weight:700;margin-top:8px;}
   .field{margin-bottom:12px;}
   .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;font-weight:600;}
-  .field input,.field textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 11px;font-size:14px;color:var(--text);background:#FBFCFE;outline:none;}
+  .field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 11px;font-size:14px;color:var(--text);background:#FBFCFE;outline:none;}
+  .field select{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 18px) 18px,calc(100% - 13px) 18px;background-size:5px 5px,5px 5px;background-repeat:no-repeat;}
   .field input:focus,.field textarea:focus{border-color:var(--gold);}
   .field textarea{resize:none;height:64px;}
   .chips{display:flex;flex-wrap:wrap;gap:8px;}
@@ -87,7 +88,7 @@
           <p>为给您与家人提供更贴心、更丰富的专属服务，我们特别开展「客户活动意向调研」。</p>
           <p>您的每一份选择，都是我们筹备下一场活动的方向。只需约 1 分钟，勾选您感兴趣的活动，即有机会优先参与我们的专属客户活动。</p>
           <p>期待与您相见，共享美好生活。</p>
-          <div class="sign">—— 平安人寿 客户服务部</div>
+          <div class="sign">—— 平安人寿广西分公司</div>
         </div>
       </div>
 
@@ -95,9 +96,22 @@
         <div class="card-h"><span class="bar"></span><h2>一、基本信息</h2><span class="en">BASE INFO</span></div>
         <div class="field"><label>您的称呼（姓名）</label><input id="name" type="text" placeholder="请输入您的姓名" /></div>
         <div class="field"><label>联系电话</label><input id="phone" type="tel" placeholder="请输入手机号，便于活动通知" /></div>
+        <div class="field"><label>您的康养顾问姓名</label><input id="advisor" type="text" placeholder="请输入为您服务的康养顾问姓名" /></div>
+        <div class="field"><label>您的康养顾问所在部门</label>
+          <select id="advisorDept" class="field-select">
+            <option value="">请选择部门</option>
+            <option value="2部">2部</option>
+            <option value="5部">5部</option>
+            <option value="15部">15部</option>
+            <option value="21部">21部</option>
+            <option value="22部">22部</option>
+            <option value="39部">39部</option>
+          </select>
+        </div>
         <div class="field"><label>您的年龄段</label>
           <div class="chips" data-group="age">
-            <div class="chip" data-v="50岁以下">50岁以下</div><div class="chip" data-v="50-60岁">50-60岁</div>
+            <div class="chip" data-v="20-30岁">20-30岁</div><div class="chip" data-v="30-40岁">30-40岁</div>
+            <div class="chip" data-v="40-50岁">40-50岁</div><div class="chip" data-v="50-60岁">50-60岁</div>
             <div class="chip" data-v="60-70岁">60-70岁</div><div class="chip" data-v="70岁以上">70岁以上</div>
           </div>
         </div>
@@ -107,18 +121,18 @@
         <div class="card-h"><span class="bar"></span><h2>二、活动偏好（可多选）</h2><span class="en">INTERESTS</span></div>
         <div class="cat"><img class="cat-img" src="assets/cat-health.png" alt="健康养生类" /><div class="cat-body">
           <div class="cat-title"><span class="dot"></span><b>健康养生类</b><span>HEALTH</span></div>
-          <div class="opt" data-cat="健康养生类"><span class="box">✓</span><span class="txt">养生健康讲座（季节养生 / 慢病管理）</span></div>
+          <div class="opt" data-cat="健康养生类"><span class="box">✓</span><span class="txt">养生健康讲座（季节养生 / 慢病管理 / 疼痛管理）</span></div>
           <div class="opt" data-cat="健康养生类"><span class="box">✓</span><span class="txt">名中医一对一问诊</span></div>
           <div class="opt" data-cat="健康养生类"><span class="box">✓</span><span class="txt">体检报告专业解读</span></div>
-          <div class="opt" data-cat="健康养生类"><span class="box">✓</span><span class="txt">睡眠健康沙龙（含睡眠监测指环体验）</span></div>
           <div class="opt" data-cat="健康养生类"><span class="box">✓</span><span class="txt">八段锦 / 太极晨练营</span></div>
         </div></div>
         <div class="cat"><img class="cat-img" src="assets/cat-wealth.png" alt="财富规划类" /><div class="cat-body">
           <div class="cat-title"><span class="dot"></span><b>财富规划类</b><span>WEALTH</span></div>
-          <div class="opt" data-cat="财富规划类"><span class="box">✓</span><span class="txt">产品说明会（产说会）</span></div>
+          <div class="opt" data-cat="财富规划类"><span class="box">✓</span><span class="txt">财富产品推介会</span></div>
           <div class="opt" data-cat="财富规划类"><span class="box">✓</span><span class="txt">财富早茶会</span></div>
           <div class="opt" data-cat="财富规划类"><span class="box">✓</span><span class="txt">养老规划公开课</span></div>
           <div class="opt" data-cat="财富规划类"><span class="box">✓</span><span class="txt">家庭资产配置讲座</span></div>
+          <div class="opt" data-cat="财富规划类"><span class="box">✓</span><span class="txt">信托沙龙</span></div>
           <div class="opt" data-cat="财富规划类"><span class="box">✓</span><span class="txt">平安居家 2.0 养老服务体验</span></div>
         </div></div>
         <div class="cat"><img class="cat-img" src="assets/cat-culture.png" alt="文化休闲类" /><div class="cat-body">
@@ -128,11 +142,11 @@
           <div class="opt" data-cat="文化休闲类"><span class="box">✓</span><span class="txt">手机摄影培训</span></div>
           <div class="opt" data-cat="文化休闲类"><span class="box">✓</span><span class="txt">旗袍 / 形象美学沙龙</span></div>
           <div class="opt" data-cat="文化休闲类"><span class="box">✓</span><span class="txt">合唱 / 声乐兴趣班</span></div>
+          <div class="opt" data-cat="文化休闲类"><span class="box">✓</span><span class="txt">棋牌类竞技（掼蛋 / 麻将 / 象棋 / 围棋等）</span></div>
         </div></div>
         <div class="cat"><img class="cat-img" src="assets/cat-family.png" alt="亲子家庭类" /><div class="cat-body">
           <div class="cat-title"><span class="dot"></span><b>亲子家庭类</b><span>FAMILY</span></div>
           <div class="opt" data-cat="亲子家庭类"><span class="box">✓</span><span class="txt">亲子手工 / 烘焙</span></div>
-          <div class="opt" data-cat="亲子家庭类"><span class="box">✓</span><span class="txt">祖孙课堂（隔代教育）</span></div>
           <div class="opt" data-cat="亲子家庭类"><span class="box">✓</span><span class="txt">家庭日 / 节庆联欢</span></div>
           <div class="opt" data-cat="亲子家庭类"><span class="box">✓</span><span class="txt">亲子户外拓展</span></div>
         </div></div>
@@ -185,7 +199,7 @@
     if(!/^1\d{10}$/.test(phone))return showToast('请填写正确的手机号');
     var picks=[];document.querySelectorAll('.opt.on').forEach(function(o){picks.push({cat:o.dataset.cat,txt:o.querySelector('.txt').textContent});});
     if(picks.length===0)return showToast('请至少选择一项感兴趣的活动');
-    var payload={name:name,phone:phone,age:val('age'),interests:picks.map(function(p){return p.txt;}),categories:picks.map(function(p){return p.cat;}),form:val('form'),time:val('time'),place:val('place'),remark:document.getElementById('remark').value.trim()};
+    var payload={name:name,phone:phone,age:val('age'),advisor:document.getElementById('advisor').value.trim(),advisorDept:document.getElementById('advisorDept').value,interests:picks.map(function(p){return p.txt;}),categories:picks.map(function(p){return p.cat;}),form:val('form'),time:val('time'),place:val('place'),remark:document.getElementById('remark').value.trim()};
     try{
       var r=await fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
       var j=await r.json();
