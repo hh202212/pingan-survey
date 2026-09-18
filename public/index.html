@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>平安客户专属活动调研</title>
+<style>
+  :root{
+    --navy:#0B2447; --navy2:#102A56; --gold:#C9A227; --gold2:#E8C766; --gold-soft:#F6ECCF;
+    --bg:#EEF1F6; --card:#FFFFFF; --text:#1C2433; --muted:#6B7280; --line:#E5E8EF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:#c9ced8;color:var(--text);display:flex;justify-content:center;align-items:flex-start;padding:24px 0;}
+  .phone{width:390px;max-width:100vw;background:var(--bg);border-radius:38px;box-shadow:0 24px 60px rgba(11,36,71,.35);overflow:hidden;position:relative;border:10px solid #0a0e16;}
+  .statusbar{height:44px;background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 22px;color:#fff;font-size:14px;font-weight:600;}
+  .navbar{height:46px;background:var(--navy);display:flex;align-items:center;justify-content:center;position:relative;color:#fff;}
+  .navbar .back{position:absolute;left:14px;font-size:20px;font-weight:700;}
+  .navbar .title{font-size:16px;font-weight:600;letter-spacing:1px;}
+  .navbar .capsule{position:absolute;right:12px;top:50%;transform:translateY(-50%);border:1px solid rgba(255,255,255,.5);border-radius:16px;width:74px;height:28px;display:flex;align-items:center;justify-content:space-around;font-size:14px;}
+  .screen{height:620px;overflow-y:auto;background:var(--bg);}
+  .screen::-webkit-scrollbar{width:0;}
+  .hero{position:relative;height:210px;}
+  .hero img{width:100%;height:100%;object-fit:cover;display:block;}
+  .hero .mask{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,36,71,.15),rgba(11,36,71,.78));display:flex;flex-direction:column;justify-content:flex-end;padding:16px 18px;}
+  .hero .tag{align-self:flex-start;background:var(--gold);color:var(--navy);font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;margin-bottom:8px;}
+  .hero h1{color:#fff;font-size:22px;font-weight:800;letter-spacing:1px;}
+  .hero .sub{color:var(--gold2);font-size:13px;margin-top:4px;font-weight:600;}
+  .wrap{padding:14px 14px 28px;}
+  .card{background:var(--card);border-radius:14px;padding:14px;margin-bottom:14px;box-shadow:0 4px 14px rgba(11,36,71,.06);}
+  .card-h{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .card-h .bar{width:4px;height:16px;background:var(--gold);border-radius:2px;}
+  .card-h h2{font-size:15px;color:var(--navy);font-weight:700;}
+  .card-h .en{font-size:11px;color:var(--muted);margin-left:auto;font-weight:600;}
+  .invite{font-size:13px;line-height:1.85;color:#374151;}
+  .invite p{margin-bottom:6px;}
+  .invite .sign{text-align:right;color:var(--navy);font-weight:700;margin-top:8px;}
+  .field{margin-bottom:12px;}
+  .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;font-weight:600;}
+  .field input,.field textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 11px;font-size:14px;color:var(--text);background:#FBFCFE;outline:none;}
+  .field input:focus,.field textarea:focus{border-color:var(--gold);}
+  .field textarea{resize:none;height:64px;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{border:1px solid var(--line);border-radius:20px;padding:7px 14px;font-size:13px;color:var(--text);background:#fff;cursor:pointer;user-select:none;transition:.15s;}
+  .chip.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .cat{margin-bottom:14px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;}
+  .cat .cat-img{width:100%;height:128px;object-fit:cover;display:block;}
+  .cat .cat-body{padding:12px 13px;}
+  .cat .cat-title{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .cat .cat-title .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);}
+  .cat .cat-title b{font-size:15px;color:var(--navy);}
+  .cat .cat-title span{font-size:11px;color:var(--muted);margin-left:auto;}
+  .opt{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;border:1px solid var(--line);margin-bottom:8px;cursor:pointer;background:#FBFCFE;transition:.15s;}
+  .opt .box{width:20px;height:20px;border-radius:6px;border:1.5px solid #C2C8D4;flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;transition:.15s;}
+  .opt.on{border-color:var(--gold);background:var(--gold-soft);}
+  .opt.on .box{background:var(--gold);border-color:var(--gold);}
+  .opt .txt{font-size:13.5px;line-height:1.4;}
+  .submit{width:100%;border:none;border-radius:26px;padding:14px;font-size:16px;font-weight:800;color:var(--navy);background:linear-gradient(90deg,var(--gold2),var(--gold));box-shadow:0 8px 20px rgba(201,162,39,.35);cursor:pointer;letter-spacing:2px;}
+  .submit:active{filter:brightness(.96);}
+  .share{width:100%;border:1px solid var(--gold);border-radius:26px;padding:11px;font-size:14px;font-weight:700;color:var(--navy);background:#fff;cursor:pointer;margin-top:10px;letter-spacing:1px;}
+  .tip{font-size:11px;color:var(--muted);text-align:center;margin-top:10px;line-height:1.6;}
+  .toast{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.9);background:rgba(11,36,71,.94);color:#fff;padding:18px 22px;border-radius:14px;font-size:14px;line-height:1.7;text-align:center;max-width:300px;opacity:0;pointer-events:none;transition:.25s;z-index:50;white-space:pre-line;}
+  .toast.show{opacity:1;transform:translate(-50%,-50%) scale(1);}
+  .toast .ok{color:var(--gold2);font-size:30px;display:block;margin-bottom:6px;}
+  .mask-bg{position:fixed;inset:0;background:rgba(11,36,71,.55);display:none;align-items:center;justify-content:center;z-index:60;}
+  .mask-bg.show{display:flex;}
+  .qr-card{background:#fff;border-radius:16px;padding:20px;text-align:center;width:280px;}
+  .qr-card img{width:220px;height:220px;}
+  .qr-card p{font-size:13px;color:var(--muted);margin-top:10px;}
+  .qr-card .close{margin-top:14px;color:var(--navy);font-weight:700;font-size:14px;cursor:pointer;}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="statusbar"><span id="clock">9:41</span><span class="icons">●●●  Wi-Fi  🔋</span></div>
+  <div class="navbar"><span class="back">‹</span><span class="title">平安客户活动调研</span><span class="capsule">···  ⊙</span></div>
+  <div class="screen" id="screen">
+    <div class="hero">
+      <img src="assets/banner.png" alt="客户活动主视觉" />
+      <div class="mask"><span class="tag">平安人寿 · 客户专属</span><h1>客户活动意向调研</h1><div class="sub">您的兴趣 · 我们的方向</div></div>
+    </div>
+    <div class="wrap">
+      <div class="card">
+        <div class="card-h"><span class="bar"></span><h2>诚邀您参与调研</h2><span class="en">ABOUT 1 min</span></div>
+        <div class="invite">
+          <p>尊敬的平安客户，您好！</p>
+          <p>为给您与家人提供更贴心、更丰富的专属服务，我们特别开展「客户活动意向调研」。</p>
+          <p>您的每一份选择，都是我们筹备下一场活动的方向。只需约 1 分钟，勾选您感兴趣的活动，即有机会优先参与我们的专属客户活动。</p>
+          <p>期待与您相见，共享美好生活。</p>
+          <div class="sign">—— 平安人寿 客户服务部</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-h"><span class="bar"></span><h2>一、基本信息</h2><span class="en">BASE INFO</span></div>
+        <div class="field"><label>您的称呼（姓名）</label><input id="name" type="text" placeholder="请输入您的姓名" /></div>
+        <div class="field"><label>联系电话</label><input id="phone" type="tel" placeholder="请输入手机号，便于活动通知" /></div>
+        <div class="field"><label>您的年龄段</label>
+          <div class="chips" data-group="age">
+            <div class="chip" data-v="50岁以下">50岁以下</div><div class="chip" data-v="50-60岁">50-60岁</div>
+            <div class="chip" data-v="60-70岁">60-70岁</div><div class="chip" data-v="70岁以上">70岁以上</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-h"><span class="bar"></span><h2>二、活动偏好（可多选）</h2><span class="en">INTERESTS</span></div>
+        <div class="cat"><img class="cat-img" src="assets/cat-health.png" alt="健康养生类" /><div class="cat-body">
+          <div class="cat-title"><span class="dot"></span><b>健康养生类</b><span>HEALTH</span></div>
+          <div class="opt" data-cat="健康养生类"><span class="box">✓</span><span class="txt">养生健康讲座（季节养生 / 慢病管理）</span></div>
+          <div class="opt" data-cat="健康养生类"><span class="box">✓</span><span class="txt">名中医一对一问诊</span></div>
+          <div class="opt" data-cat="健康养生类"><span class="box">✓</span><span class="txt">体检报告专业解读</span></div>
+          <div class="opt" data-cat="健康养生类"><span class="box">✓</span><span class="txt">睡眠健康沙龙（含睡眠监测指环体验）</span></div>
+          <div class="opt" data-cat="健康养生类"><span class="box">✓</span><span class="txt">八段锦 / 太极晨练营</span></div>
+        </div></div>
+        <div class="cat"><img class="cat-img" src="assets/cat-wealth.png" alt="财富规划类" /><div class="cat-body">
+          <div class="cat-title"><span class="dot"></span><b>财富规划类</b><span>WEALTH</span></div>
+          <div class="opt" data-cat="财富规划类"><span class="box">✓</span><span class="txt">产品说明会（产说会）</span></div>
+          <div class="opt" data-cat="财富规划类"><span class="box">✓</span><span class="txt">财富早茶会</span></div>
+          <div class="opt" data-cat="财富规划类"><span class="box">✓</span><span class="txt">养老规划公开课</span></div>
+          <div class="opt" data-cat="财富规划类"><span class="box">✓</span><span class="txt">家庭资产配置讲座</span></div>
+          <div class="opt" data-cat="财富规划类"><span class="box">✓</span><span class="txt">平安居家 2.0 养老服务体验</span></div>
+        </div></div>
+        <div class="cat"><img class="cat-img" src="assets/cat-culture.png" alt="文化休闲类" /><div class="cat-body">
+          <div class="cat-title"><span class="dot"></span><b>文化休闲类</b><span>CULTURE</span></div>
+          <div class="opt" data-cat="文化休闲类"><span class="box">✓</span><span class="txt">书画雅集</span></div>
+          <div class="opt" data-cat="文化休闲类"><span class="box">✓</span><span class="txt">茶艺品鉴</span></div>
+          <div class="opt" data-cat="文化休闲类"><span class="box">✓</span><span class="txt">手机摄影培训</span></div>
+          <div class="opt" data-cat="文化休闲类"><span class="box">✓</span><span class="txt">旗袍 / 形象美学沙龙</span></div>
+          <div class="opt" data-cat="文化休闲类"><span class="box">✓</span><span class="txt">合唱 / 声乐兴趣班</span></div>
+        </div></div>
+        <div class="cat"><img class="cat-img" src="assets/cat-family.png" alt="亲子家庭类" /><div class="cat-body">
+          <div class="cat-title"><span class="dot"></span><b>亲子家庭类</b><span>FAMILY</span></div>
+          <div class="opt" data-cat="亲子家庭类"><span class="box">✓</span><span class="txt">亲子手工 / 烘焙</span></div>
+          <div class="opt" data-cat="亲子家庭类"><span class="box">✓</span><span class="txt">祖孙课堂（隔代教育）</span></div>
+          <div class="opt" data-cat="亲子家庭类"><span class="box">✓</span><span class="txt">家庭日 / 节庆联欢</span></div>
+          <div class="opt" data-cat="亲子家庭类"><span class="box">✓</span><span class="txt">亲子户外拓展</span></div>
+        </div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-h"><span class="bar"></span><h2>三、参与偏好</h2><span class="en">PREFERENCE</span></div>
+        <div class="field"><label>您更期待的活动形式</label>
+          <div class="chips" data-group="form"><div class="chip" data-v="线下沙龙">线下沙龙</div><div class="chip" data-v="线上直播">线上直播</div><div class="chip" data-v="两者皆可">两者皆可</div></div>
+        </div>
+        <div class="field"><label>方便的参与时间</label>
+          <div class="chips" data-group="time"><div class="chip" data-v="工作日白天">工作日白天</div><div class="chip" data-v="周末">周末</div><div class="chip" data-v="晚间">晚间</div></div>
+        </div>
+        <div class="field"><label>希望的活动地点</label>
+          <div class="chips" data-group="place"><div class="chip" data-v="就近网点">就近网点</div><div class="chip" data-v="社区">社区</div><div class="chip" data-v="指定场馆">指定场馆</div></div>
+        </div>
+        <div class="field"><label>其他建议（选填）</label><textarea id="remark" placeholder="您还希望我们举办哪些活动？"></textarea></div>
+      </div>
+
+      <button class="submit" id="submitBtn">提 交 调 研</button>
+      <button class="share" id="shareBtn">生 成 分 享 二 维 码</button>
+      <div class="tip">提交即存入云端数据库，您可在管理后台查看与导出</div>
+    </div>
+  </div>
+  <div class="toast" id="toast"><span class="ok">✓</span><span id="toastMsg"></span></div>
+</div>
+
+<div class="mask-bg" id="qrMask">
+  <div class="qr-card">
+    <img id="qrImg" alt="分享二维码" />
+    <p>微信扫一扫，客户即可填写调研</p>
+    <div class="close" id="qrClose">关闭</div>
+  </div>
+</div>
+
+<script>
+  function tick(){var d=new Date();document.getElementById('clock').textContent=d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');}
+  tick();setInterval(tick,10000);
+  function val(group){var c=document.querySelector('.chips[data-group="'+group+'"] .chip.on');return c?c.dataset.v:"";}
+
+  document.querySelectorAll('.chips').forEach(function(g){g.addEventListener('click',function(e){var c=e.target.closest('.chip');if(!c)return;g.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on');});c.classList.add('on');});});
+  document.querySelectorAll('.opt').forEach(function(o){o.addEventListener('click',function(){o.classList.toggle('on');});});
+
+  function showToast(msg,long){var t=document.getElementById('toast');document.getElementById('toastMsg').textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show');},long?2600:1800);}
+
+  document.getElementById('submitBtn').addEventListener('click',async function(){
+    var name=document.getElementById('name').value.trim();
+    var phone=document.getElementById('phone').value.trim();
+    if(!name)return showToast('请填写您的称呼');
+    if(!/^1\d{10}$/.test(phone))return showToast('请填写正确的手机号');
+    var picks=[];document.querySelectorAll('.opt.on').forEach(function(o){picks.push({cat:o.dataset.cat,txt:o.querySelector('.txt').textContent});});
+    if(picks.length===0)return showToast('请至少选择一项感兴趣的活动');
+    var payload={name:name,phone:phone,age:val('age'),interests:picks.map(function(p){return p.txt;}),categories:picks.map(function(p){return p.cat;}),form:val('form'),time:val('time'),place:val('place'),remark:document.getElementById('remark').value.trim()};
+    try{
+      var r=await fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      var j=await r.json();
+      if(j.ok)showToast('提交成功，感谢 '+name+' 的参与！\n已收到 '+j.count+' 项活动意向',true);
+      else showToast(j.msg||'提交失败，请稍后再试');
+    }catch(e){showToast('网络异常，提交失败');}
+  });
+
+  document.getElementById('shareBtn').addEventListener('click',function(){
+    var u=location.origin+location.pathname;
+    document.getElementById('qrImg').src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent(u);
+    document.getElementById('qrMask').classList.add('show');
+  });
+  document.getElementById('qrClose').addEventListener('click',function(){document.getElementById('qrMask').classList.remove('show');});
+</script>
+</body>
+</html>
