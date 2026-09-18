@@ -48,8 +48,8 @@
     </div>
     <div style="max-height:60vh;overflow:auto;border-radius:12px;">
       <table>
-        <thead><tr><th>编号</th><th>姓名</th><th>手机号</th><th>年龄段</th><th>感兴趣活动</th><th>覆盖分类</th><th>形式/时间/地点</th><th>建议</th><th>提交时间</th></tr></thead>
-        <tbody id="rows"><tr><td colspan="9" class="muted">加载中…</td></tr></tbody>
+        <thead><tr><th>编号</th><th>姓名</th><th>手机号</th><th>年龄段</th><th>康养顾问</th><th>顾问部门</th><th>感兴趣活动</th><th>覆盖分类</th><th>形式/时间/地点</th><th>建议</th><th>提交时间</th></tr></thead>
+        <tbody id="rows"><tr><td colspan="11" class="muted">加载中…</td></tr></tbody>
       </table>
     </div>
   </div>
@@ -65,7 +65,7 @@
         var ins=JSON.parse(r.interests||'[]').join('、');
         var cats=JSON.parse(r.categories||'[]').join('、');
         var t=new Date(Number(r.created_at)).toLocaleString('zh-CN');
-        return '<tr><td>'+r.id+'</td><td>'+r.name+'</td><td>'+r.phone+'</td><td>'+(r.age||'-')+'</td><td>'+ins+'</td><td>'+cats+'</td><td>'+(r.form||'-')+' / '+(r.time||'-')+' / '+(r.place||'-')+'</td><td>'+(r.remark||'')+'</td><td>'+t+'</td></tr>';
+        return '<tr><td>'+r.id+'</td><td>'+r.name+'</td><td>'+r.phone+'</td><td>'+(r.age||'-')+'</td><td>'+(r.advisor||'-')+'</td><td>'+(r.advisor_dept||'-')+'</td><td>'+ins+'</td><td>'+cats+'</td><td>'+(r.form||'-')+' / '+(r.time||'-')+' / '+(r.place||'-')+'</td><td>'+(r.remark||'')+'</td><td>'+t+'</td></tr>';
       }).join('');
     }).catch(function(e){
       document.getElementById('loginErr').textContent='口令错误或无数据';
