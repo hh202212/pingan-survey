@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>调研数据管理后台</title>
+<style>
+  :root{--navy:#0B2447;--gold:#C9A227;--bg:#EEF1F6;--line:#E5E8EF);}
+  *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;}
+  body{background:var(--bg);color:#1C2433;padding:24px;max-width:960px;margin:0 auto;}
+  h1{color:var(--navy);font-size:22px;margin-bottom:4px;}
+  .sub{color:#6B7280;font-size:13px;margin-bottom:18px;}
+  .login{background:#fff;border-radius:12px;padding:20px;box-shadow:0 4px 14px rgba(11,36,71,.06);max-width:360px;}
+  .login input{border:1px solid var(--line);border-radius:8px;padding:10px;width:100%;font-size:14px;margin:8px 0;}
+  .login button{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 16px;font-weight:700;cursor:pointer;}
+  .panel{display:none;}
+  .bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px;}
+  .stat{background:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 4px 14px rgba(11,36,71,.06);}
+  .stat b{display:block;font-size:26px;color:var(--navy);}
+  .stat span{font-size:12px;color:#6B7280;}
+  .btn{background:var(--gold);color:var(--navy);border:none;border-radius:8px;padding:10px 16px;font-weight:700;cursor:pointer;}
+  .btn.ghost{background:#fff;border:1px solid var(--navy);color:var(--navy);}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:13px;box-shadow:0 4px 14px rgba(11,36,71,.06);}
+  th,td{border-bottom:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top;}
+  th{background:var(--navy);color:#fff;position:sticky;top:0;}
+  tr:hover td{background:#F8FAFC;}
+  .err{color:#b91c1c;font-size:13px;margin-top:8px;}
+  .muted{color:#6B7280;}
+</style>
+</head>
+<body>
+  <h1>平安客户活动调研 · 数据后台</h1>
+  <div class="sub">数据存放于 Cloudflare D1，可在此查看、导出 CSV（Excel 直接打开）</div>
+
+  <div class="login" id="login">
+    <div>请输入管理口令：</div>
+    <input id="key" type="password" placeholder="ADMIN_KEY" />
+    <button id="loginBtn">进入后台</button>
+    <div class="err" id="loginErr"></div>
+  </div>
+
+  <div class="panel" id="panel">
+    <div class="bar">
+      <div class="stat"><b id="cnt">0</b><span>总回收份数</span></div>
+      <button class="btn" id="exportBtn">导出 CSV</button>
+      <button class="btn ghost" id="refreshBtn">刷新</button>
+      <button class="btn ghost" id="logoutBtn">退出</button>
+    </div>
+    <div style="max-height:60vh;overflow:auto;border-radius:12px;">
+      <table>
+        <thead><tr><th>编号</th><th>姓名</th><th>手机号</th><th>年龄段</th><th>感兴趣活动</th><th>覆盖分类</th><th>形式/时间/地点</th><th>建议</th><th>提交时间</th></tr></thead>
+        <tbody id="rows"><tr><td colspan="9" class="muted">加载中…</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+<script>
+  var KEY="";
+  function load(){
+    fetch('/api/data?key='+encodeURIComponent(KEY)).then(function(r){return r.ok?r.json():Promise.reject(r.status);}).then(function(d){
+      document.getElementById('cnt').textContent=d.count;
+      var tb=document.getElementById('rows');
+      if(!d.results.length){tb.innerHTML='<tr><td colspan="9" class="muted">暂无数据</td></tr>';return;}
+      tb.innerHTML=d.results.map(function(r){
+        var ins=JSON.parse(r.interests||'[]').join('、');
+        var cats=JSON.parse(r.categories||'[]').join('、');
+        var t=new Date(Number(r.created_at)).toLocaleString('zh-CN');
+        return '<tr><td>'+r.id+'</td><td>'+r.name+'</td><td>'+r.phone+'</td><td>'+(r.age||'-')+'</td><td>'+ins+'</td><td>'+cats+'</td><td>'+(r.form||'-')+' / '+(r.time||'-')+' / '+(r.place||'-')+'</td><td>'+(r.remark||'')+'</td><td>'+t+'</td></tr>';
+      }).join('');
+    }).catch(function(e){
+      document.getElementById('loginErr').textContent='口令错误或无数据';
+      if(e===403){document.getElementById('panel').style.display='none';document.getElementById('login').style.display='block';}
+    });
+  }
+  document.getElementById('loginBtn').addEventListener('click',function(){
+    KEY=document.getElementById('key').value.trim();
+    if(!KEY){document.getElementById('loginErr').textContent='请输入口令';return;}
+    fetch('/api/data?key='+encodeURIComponent(KEY)).then(function(r){return r.ok?r.json():Promise.reject(r.status);}).then(function(){
+      document.getElementById('login').style.display='none';
+      document.getElementById('panel').style.display='block';
+      load();
+    }).catch(function(e){document.getElementById('loginErr').textContent=(e===403?'口令错误':'加载失败');});
+  });
+  document.getElementById('exportBtn').addEventListener('click',function(){window.open('/api/data?key='+encodeURIComponent(KEY)+'&format=csv');});
+  document.getElementById('refreshBtn').addEventListener('click',load);
+  document.getElementById('logoutBtn').addEventListener('click',function(){KEY="";document.getElementById('panel').style.display='none';document.getElementById('login').style.display='block';});
+</script>
+</body>
+</html>
