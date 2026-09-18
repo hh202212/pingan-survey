@@ -11,12 +11,14 @@ export async function onRequestGet({ request, env }) {
   ).all();
 
   if (url.searchParams.get("format") === "csv") {
-    const header = ["编号", "姓名", "手机号", "年龄段", "感兴趣活动", "覆盖分类", "活动形式", "参与时间", "活动地点", "其他建议", "提交时间"];
+    const header = ["编号", "姓名", "手机号", "年龄段", "康养顾问", "顾问部门", "感兴趣活动", "覆盖分类", "活动形式", "参与时间", "活动地点", "其他建议", "提交时间"];
     const rows = results.map((r) => [
       r.id,
       r.name,
       r.phone,
       r.age,
+      r.advisor,
+      r.advisor_dept,
       (JSON.parse(r.interests || "[]").join("、")),
       (JSON.parse(r.categories || "[]").join("、")),
       r.form,
