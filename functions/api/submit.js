@@ -19,12 +19,14 @@ export async function onRequestPost({ request, env }) {
 
     await env.DB.prepare(
       `INSERT INTO survey_responses
-        (name, phone, age, interests, categories, form, time, place, remark, created_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+        (name, phone, age, advisor, advisor_dept, interests, categories, form, time, place, remark, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     ).bind(
       name,
       phone,
       b.age || "",
+      (b.advisor || "").trim(),
+      b.advisorDept || "",
       JSON.stringify(interests),
       JSON.stringify(categories),
       b.form || "",
